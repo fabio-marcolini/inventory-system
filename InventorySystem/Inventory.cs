@@ -7,9 +7,9 @@ namespace InventorySystem
 {
     public class Inventory <TItem, TParameter> where TItem : Item<TParameter>
     {
-        private List<TItem> items;
+        private List<TItem> items = new List<TItem>();
 
-        public IReadOnlyCollection<TItem> Items { get { return new ReadOnlyCollection<TItem>(items); } }
+        public IReadOnlyList<TItem> Items { get { return new List<TItem>(items); } }
 
         public void AddItem(TItem item)
         {
@@ -19,6 +19,11 @@ namespace InventorySystem
         public void RemoveItem(TItem item)
         {
             items.Remove(item);
+        }
+
+        public TItem this[int index]
+        {
+            get { return items[index]; }
         }
     }
 }

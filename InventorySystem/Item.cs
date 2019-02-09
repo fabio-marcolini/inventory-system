@@ -7,11 +7,39 @@ namespace InventorySystem
 {
     public class Item<TParameter>
     {
-        private List<IAction<TParameter>> actions;
+        protected List<IAction<TParameter>> actions = new List<IAction<TParameter>>();
 
-        public IReadOnlyCollection<IAction<TParameter>> Actions
+        public IReadOnlyList<IAction<TParameter>> Actions
         {
-            get { return new ReadOnlyCollection<IAction<TParameter>>(actions); }
+            get { return actions; }
+        }
+
+        private Dictionary<string, object> Properties = new Dictionary<string, object>();
+
+        public IAction<TParameter> this[int index]
+        {
+            get { return actions[index]; }
+        }
+
+        public object this[string property]
+        {
+            get { return Properties[property]; }
+            set { Properties[property] = value; }
+        }
+
+        public T GetProperty<T>(string property)
+        {
+            return (T)this[property];
+        }
+
+        public bool HasProperty(string property)
+        {
+            return Properties.ContainsKey(property);
+        }
+
+        public bool RemoveProperty(string property)
+        {
+            return Properties.Remove(property);
         }
     }
 }
